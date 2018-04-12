@@ -76,23 +76,43 @@ def searchInfo():
                     )
     
 def loadfile():
-    file = open("allrecord.dat")
-    
+    file = open("/home/skittle/Code/allrecord.dat")
+    line = file.readline()
+    while line:
+        test = line.split()
+        stuInfo = {}
+        stuInfo["name"] = test[0]
+        stuInfo["sex"] = test[1]
+        stuInfo["phone"] = test[2]
+        stuInfos.append(stuInfo)
+        line = file.readline()
+    file.close()
+
+def savefile():
+    file = open("/home/skittle/Code/allrecord.dat", 'w')
+    for index in range(0, len(stuInfos)):
+        file.write("%s %s %s\n"%(stuInfos[index]["name"],
+        stuInfos[index]["sex"],stuInfos[index]["phone"]))
+    file.close()
     
 
-
+loadfile()
 while (menu()):
     key = int(input("请选择功能： "))    
     if key == 1:
         insInfo()
+        savefile()
     if key == 2:
         delStu()
+        savefile()
     if key == 3:
         changeInfo()
+        savefile()
     if key == 4:
         searchInfo()
     if key == 5:
         printInfo()
     if key == 6:
+        savefile()        
         print("学生管理系统为您服务！再见。")
         exit()
